@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
+import { login } from '../../services/authenticate.service';
 
 const schema = yup.object({
     email: yup.string().required('Email is required').email('Please enter a valid email'),
@@ -21,7 +22,11 @@ export default function Login(){
         if(isValid){
             console.log('===data===', data, isValid);
             localStorage.setItem('user', JSON.stringify(data));
-            navigate("/", { replace: true });
+            login(data)
+            .then(res=>{
+                console.log('res', res);
+            })
+            // navigate("/", { replace: true });
         }
     },[isValid])
 
