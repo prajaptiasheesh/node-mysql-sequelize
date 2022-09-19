@@ -29,7 +29,7 @@ const register = async (body, params, query)=>{
             let { password, salt, ...userJson} = user.toJSON();
             userJson.role = role;
             return JwtService.generateToken(userJson)
-                .then(token=>{
+                .then(({ token })=>{
                     return {...userJson, token};
                 })
         }).catch(async(err)=>{
@@ -40,7 +40,7 @@ const register = async (body, params, query)=>{
 
 const login = async (body, params, query)=>{
 
-    const { Users, sequelize } = global['db'];
+    const { Users, Roles, sequelize } = global['db'];
     // First, we start a transaction from your connection and save it into a variable
 
     let conditions = []
@@ -54,7 +54,12 @@ const login = async (body, params, query)=>{
         conditions = { userName: body.userName }
     }
     return Users.findOne({ where : {
-                  ...(conditions.length > 1 ? {[Op.or]: conditions}: conditions)
+                  ...(conditions.length > 1 ? {[Op.or]: conditions}: conditions),
+            }, include: { 
+                model: Roles, 
+                through: {
+                    attributes: []
+                }
             }}).then(async(result)=>{
             
                 if(result){
@@ -64,7 +69,7 @@ const login = async (body, params, query)=>{
                         throw new Error("password or email doesn't match");
                     }else{
                        return JwtService.generateToken(user)
-                       .then(token=>{
+                       .then(({ token })=>{
                            return { token }
                        })
                     }

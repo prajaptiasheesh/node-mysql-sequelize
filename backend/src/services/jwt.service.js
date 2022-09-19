@@ -23,15 +23,15 @@ class Jwt{
                 algorithm: this.algorithm, 
                 expiresIn: Date.now() + 1000*60*60 
             }, (error, token)=>{
-                resolve(token, error)
+                resolve({token, error})
             })
         })
     }
 
     verifyToken(token){
         return new Promise((resolve)=>{
-            jwt.verify(token, this.publicKey, (err, decoded)=> {
-                resolve(decoded, err);
+            jwt.verify(token, this.publicKey, (error, result)=> {
+                resolve({result, error});
             })
         })
     }

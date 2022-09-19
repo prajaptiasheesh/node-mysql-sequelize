@@ -28,7 +28,6 @@ const corsOptions = {
 const whitelist = ['http://localhost:3000', 'https://localhost:3000']
 const corsOptionsDelegate = function (req, callback) {
   var corsOptions;
-  console.log("request came")
   if (whitelist.indexOf(req.header('Origin')) !== -1) {
     corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
   } else {
