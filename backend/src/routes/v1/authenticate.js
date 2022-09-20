@@ -4,7 +4,7 @@ var AuthenticationRouter = express.Router();
 const { validate, addEditUserSchema, userLoginSchema }= require('../../validators');
 const { formatResponse }= require('../../helpers')
 
-const { registerController, loginController } = require('../../controllers/auth.controller');
+const { registerController, loginController } = require('../../controllers');
 
 
 AuthenticationRouter.post('/register', validate(addEditUserSchema), formatResponse(registerController))
