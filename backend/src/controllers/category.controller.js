@@ -27,6 +27,12 @@ const addProductCategory = async (body, params, query)=>{
             })
 }
 
+const listCategory = async (body, params, query)=>{
+
+    let { ProductCategories } = global["db"];
+    return ProductCategories.findAll({ raw: true })
+}
 module.exports = {
     addProductCategoryController: addProductCategory,
+    listCategoryController: listCategory,
 }
