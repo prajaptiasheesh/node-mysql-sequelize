@@ -32,7 +32,33 @@ const listCategory = async (body, params, query)=>{
     let { ProductCategories } = global["db"];
     return ProductCategories.findAll({ raw: true })
 }
+
+const deleteCategory = async (body, params, query)=>{
+    let { catId } = params;
+    let { ProductCategories, sequelize } = global['db'];
+    const t = await sequelize.transaction();
+
+        return ProductCategories.findOne({ where: { id: catId } })
+        .then(category=>{
+            if(category){
+                return category.destroy({ transaction: t })
+                        .then(res=>{
+                            if(res){
+                                category  = category?.toJSON()
+                                t.commit()
+                                return category;
+                            }else{
+                                t.rollback()
+                                throw new Error("failed to destroy category")
+                            }
+                        })
+            }else{
+                throw new Error("Category does not exist");
+            }
+        })
+}
 module.exports = {
     addProductCategoryController: addProductCategory,
     listCategoryController: listCategory,
+    deleteCategoryController: deleteCategory
 }
