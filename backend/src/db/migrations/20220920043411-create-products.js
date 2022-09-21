@@ -22,6 +22,9 @@ module.exports = {
       video: {
         type: Sequelize.STRING
       },
+      createdBy: {
+        type: Sequelize.UUID
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

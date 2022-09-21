@@ -13,6 +13,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Users.belongsToMany(models.Roles, { through: 'UserRoles', foreignKey: 'userId', otherKey: 'roleId' });
+      Users.belongsToMany(models.Products, { through: 'UserCategoryProducts', foreignKey: 'userId', otherKey: 'productId' });
+      Users.belongsToMany(models.ProductCategories, { through: 'UserCategoryProducts', foreignKey: 'userId', otherKey: 'catId' });
+      Users.hasMany(models.Products, { foreignKey: 'createdBy' });
     }
 
     async validatePassword(password){

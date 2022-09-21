@@ -35,6 +35,10 @@ module.exports = (sequelize, DataTypes) => {
     video: {
       type: DataTypes.STRING
     },
+    createdBy: {
+      type: DataTypes.UUID,
+      allowNull: true
+    }
   }, {
     sequelize,
     modelName: 'Products',
