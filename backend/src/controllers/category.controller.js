@@ -1,10 +1,10 @@
-const addProductCategory = async (body, params, query)=>{
+const addCategory = async (body, params, query)=>{
 
-    const { ProductCategories, sequelize } = global['db'];
+    const { Categories, sequelize } = global['db'];
     const t = await sequelize.transaction();
 
     // First, we start a transaction from your connection and save it into a variable
-    return ProductCategories.findOne({ where : {
+    return Categories.findOne({ where : {
                   title: body.title
             }}).then(async(result)=>{
             
@@ -13,7 +13,7 @@ const addProductCategory = async (body, params, query)=>{
                 }else{
                     try {
                         
-                        let result = await ProductCategories.create({
+                        let result = await Categories.create({
                             title: body.title,
                             name: body.name
                         }, { transaction: t })
@@ -29,16 +29,16 @@ const addProductCategory = async (body, params, query)=>{
 
 const listCategory = async (body, params, query)=>{
 
-    let { ProductCategories } = global["db"];
-    return ProductCategories.findAll({ raw: true })
+    let { Categories } = global["db"];
+    return Categories.findAll({ raw: true })
 }
 
 const deleteCategory = async (body, params, query)=>{
     let { catId } = params;
-    let { ProductCategories, sequelize } = global['db'];
+    let { Categories, sequelize } = global['db'];
     const t = await sequelize.transaction();
 
-        return ProductCategories.findOne({ where: { id: catId } })
+        return Categories.findOne({ where: { id: catId } })
         .then(category=>{
             if(category){
                 return category.destroy({ transaction: t })
@@ -58,7 +58,7 @@ const deleteCategory = async (body, params, query)=>{
         })
 }
 module.exports = {
-    addProductCategoryController: addProductCategory,
+    addCategoryController: addCategory,
     listCategoryController: listCategory,
     deleteCategoryController: deleteCategory
 }

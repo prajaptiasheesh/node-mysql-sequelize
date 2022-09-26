@@ -4,7 +4,7 @@ const formatResponse = (controller)=>(req, res, next)=>{
         let query = req.query;
         let body = req.body;
         let params = req.params;
-        controller(body, params, query)
+        controller(body, params, query, req)
         .then(result=>{
             return res.status(200).json(result)
         }).catch(err=>{

@@ -4,10 +4,10 @@ yup.addMethod(yup.string, "isCategoryExist", function (errorMessage) {
     return this.test(`category-existence`, errorMessage, function (value) {
       const { path, createError } = this;
   
-      let { ProductCategories } = global['db'];
+      let { Categories } = global['db'];
      return new Promise((resolve)=>{
             if(value){
-                return ProductCategories.findOne({ where: { 
+                return Categories.findOne({ where: { 
                           title: value  
                         }}).then(user=>{
                             if(!!user?.toJSON()){

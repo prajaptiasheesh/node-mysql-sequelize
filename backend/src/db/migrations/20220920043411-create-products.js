@@ -23,7 +23,8 @@ module.exports = {
         type: Sequelize.STRING
       },
       createdBy: {
-        type: Sequelize.UUID
+        type: Sequelize.UUID,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

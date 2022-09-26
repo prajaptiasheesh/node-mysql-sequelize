@@ -1,6 +1,6 @@
 
 const { Op } = require("sequelize");
-const { isValidHashUsingSalt } = require('../utils');
+const { isValidHashUsingSalt, hashContent } = require('../utils');
 const JwtService = require('../services/jwt.service')
 const register = async (body, params, query)=>{
 
@@ -70,6 +70,7 @@ const login = async (body, params, query)=>{
                     }else{
                        return JwtService.generateToken(user)
                        .then(({ token })=>{
+                            let hashedToken = hashContent()
                            return { token }
                        })
                     }

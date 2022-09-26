@@ -5,29 +5,38 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { login } from '../../services/authenticate.service';
+import toast from 'react-hot-toast';
+import { useCookies } from 'react-cookie';
 
 const schema = yup.object({
     email: yup.string().required('Email is required').email('Please enter a valid email'),
     password: yup.string().required('Please enter a password'),
-  }).required();
+  });
 
 export default function Login(){
 
     const { register, handleSubmit, formState:{ errors, isValid } } = useForm({
         resolver: yupResolver(schema)
       });
+    const [cookies, setCookie] = useCookies(['token']);
     let navigate = useNavigate();
 
     const onSubmitValid = useCallback((data)=>{
         if(isValid){
-            console.log('===data===', data, isValid);
             localStorage.setItem('user', JSON.stringify(data));
             login(data)
-            .then(res=>{
-                console.log('res', res);
+            .then(({ data, error })=>{
+                if(data){
+                    setCookie("token", data.token, { sameSite: true, path: '/' })
+                    toast.success("Logged in successfully")
+                    navigate("/", { replace: true });
+                }else{
+                    toast.error(error)
+                }
             })
             // navigate("/", { replace: true });
         }
+        console.log('isValid', isValid, data);
     },[isValid])
 
     const onSubmitError = (err)=>{

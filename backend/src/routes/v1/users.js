@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+const { formatResponse } = require('@helpers');
+const { addUserToProductController } = require('@controllers');
 
 router.post('/create', function(req, res) {
     res.status(200).json({ ...req.user })
@@ -16,5 +18,7 @@ router.post('/get-by-filters', function(req, res) {
 router.post('/delete', function(req, res) {
     res.send('Hello from APIv1 root route.');
 });
+
+router.post('/add-product-for-me', formatResponse(addUserToProductController))
 
 module.exports = router;

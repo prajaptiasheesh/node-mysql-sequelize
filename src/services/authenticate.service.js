@@ -15,7 +15,7 @@ export const login = async ({ email, password })=>{
         _response = {
             ..._response,
             data: null,
-            error: error
+            error: error.error.error
         }
     }
 

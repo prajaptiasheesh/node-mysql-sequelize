@@ -2,7 +2,7 @@
 const {
   Model
 } = require('sequelize');
-const { hashPassword, isValidHashUsingSalt } = require('../../utils');
+const { hashContent, isValidHashUsingSalt } = require('../../utils');
 
 module.exports = (sequelize, DataTypes) => {
   class Users extends Model {
@@ -13,9 +13,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Users.belongsToMany(models.Roles, { through: 'UserRoles', foreignKey: 'userId', otherKey: 'roleId' });
-      Users.belongsToMany(models.Products, { through: 'UserCategoryProducts', foreignKey: 'userId', otherKey: 'productId' });
-      Users.belongsToMany(models.ProductCategories, { through: 'UserCategoryProducts', foreignKey: 'userId', otherKey: 'catId' });
-      Users.hasMany(models.Products, { foreignKey: 'createdBy' });
+      Users.belongsToMany(models.Products, { through: 'UserProducts', foreignKey: 'userId', otherKey: 'productId' });
+      /** foreign key is must otherwise sequilize will try to create a camel cased id example: UserId */
+      Users.hasMany(models.UserRoles, { foreignKey: 'userId' });
+      models.UserRoles.belongsTo(Users, { foreignKey: 'userId' });
+
+      Users.hasMany(models.UserProducts, { foreignKey: 'productId' });
+      models.UserProducts.belongsTo(Users, { foreignKey: 'productId' });
     }
 
     async validatePassword(password){
@@ -62,7 +66,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Users.beforeSave(async (user) => {
-    const { password, salt, error }= await hashPassword(user.password);
+    const { password, salt, error }= await hashContent(user.password);
     if(error) return;
     user.password = password;
     user.salt = salt;

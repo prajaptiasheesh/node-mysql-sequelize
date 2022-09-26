@@ -1,6 +1,6 @@
 const crypto = require('crypto');
 
-const hashPassword = (password)=>{
+const hashContent = (password)=>{
     return new Promise((resolve)=>{
         try {
             const salt = crypto.randomBytes(16).toString('hex'); 
@@ -22,5 +22,5 @@ const isValidHashUsingSalt = (password, hash, salt)=>{
 
 module.exports = {
     isValidHashUsingSalt,
-    hashPassword
+    hashContent
 }

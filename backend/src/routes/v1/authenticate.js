@@ -1,10 +1,10 @@
 var express = require('express');
 var AuthenticationRouter = express.Router();
 
-const { validate, addEditUserSchema, userLoginSchema }= require('../../validators');
-const { formatResponse }= require('../../helpers')
+const { validate, addEditUserSchema, userLoginSchema }= require('@validators');
+const { formatResponse }= require('@helpers')
 
-const { registerController, loginController } = require('../../controllers');
+const { registerController, loginController } = require('@controllers');
 
 
 AuthenticationRouter.post('/register', validate(addEditUserSchema), formatResponse(registerController))

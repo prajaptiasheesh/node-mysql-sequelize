@@ -6,3 +6,5 @@ const checkRoleMiddleware = (permissions)=>(req, res, next)=>{
         res.status(500).json({ error: "access denied" })
     }
 }
+
+module.exports = checkRoleMiddleware

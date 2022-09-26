@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
-var formatResponse = require('../../helpers/format-response')
-const { addProductCategoryController, listCategoryController, deleteCategoryController } = require('../../controllers');
-const { validate, addProductCategorySchema }= require('../../validators');
+var { formatResponse } = require('@helpers')
+const { addCategoryController, listCategoryController, deleteCategoryController } = require('@controllers');
+const { validate, addProductCategorySchema }= require('@validators');
 
-router.post('/create', validate(addProductCategorySchema), formatResponse(addProductCategoryController));
+router.post('/create', validate(addProductCategorySchema), formatResponse(addCategoryController));
 
 router.get('/get-by-filters', formatResponse(listCategoryController));
 

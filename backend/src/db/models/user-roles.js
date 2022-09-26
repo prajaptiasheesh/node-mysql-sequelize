@@ -18,12 +18,6 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true
     },
-    roleId: {
-      type: DataTypes.UUID,
-    },
-    userId: {
-      type: DataTypes.UUID,
-    },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false,
@@ -34,7 +28,8 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'UserRoles',
     underscored: false,
     freezeTableName: true,
-    timestamps: false
+    timestamps: false,
+    paranoid: false
   });
   return UserRoles;
 };

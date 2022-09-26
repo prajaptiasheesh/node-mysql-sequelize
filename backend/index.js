@@ -1,3 +1,4 @@
+require('module-alias/register')
 require('./src/config');
 require('./src/db/models')
 const routes = require('./src/routes/v1');
@@ -48,6 +49,10 @@ let listener = (text)=>()=>{
 if(CONFIGS.isProduction){
   https.createServer(options, app).listen(listener('https running on port 443'));
 }else{
-  https.createServer(options, app).listen(listener('https running on port 443'));
+  /**
+   * if 403 port needs to be used read below article
+   * https://stackoverflow.com/questions/69000077/error-listen-eacces-permission-denied-0-0-0-0443
+   */
+  https.createServer(options, app).listen(443, listener('https running on port 443'));
   http.createServer(app).listen(8080,listener('https running on port 8080'));
 }

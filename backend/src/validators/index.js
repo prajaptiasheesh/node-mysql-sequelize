@@ -1,5 +1,6 @@
 const { addEditUserSchema, userLoginSchema } = require('./users')
 const { addProductCategorySchema } = require('./product-category')
+const { addProductSchema } = require('./products')
 const validate = (allSchema)=>async (req, res, next)=>{
 
     let query = req.query || {};
@@ -40,4 +41,5 @@ module.exports ={
     addEditUserSchema,
     userLoginSchema,
     addProductCategorySchema,
+    addProductSchema
 };

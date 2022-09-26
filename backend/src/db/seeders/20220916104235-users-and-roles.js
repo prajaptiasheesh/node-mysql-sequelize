@@ -1,7 +1,7 @@
 'use strict';
 var rolesJson = require('../../jsons/roles');
 const { v4: uuidv4 } = require('uuid');
-const { hashPassword } = require('../../utils');
+const { hashContent } = require('../../utils');
 
 module.exports = {
   async up (queryInterface, Sequelize) {
@@ -25,11 +25,11 @@ module.exports = {
         await queryInterface.bulkInsert('Roles', rolesJson, {
           transaction
         })
-          let pwd = await hashPassword('12345678');
+          let pwd = await hashContent('12345678');
           let [userId1] = [uuidv4()] 
 
             let [existingUsers] = await queryInterface.sequelize.query("select * from Users where email='ashu@yopmail.com'");
-            let admin = rolesJson.find(item=>item.name === 'ADMIN')
+            let admin = rolesJson.find(item=>item.name === 'SUPER_ADMIN')
             
             if(!existingUsers.length){
             

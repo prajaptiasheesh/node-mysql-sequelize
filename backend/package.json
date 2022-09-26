@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-dev": "export NODE_ENV=development && kill-port 8080 && nodemon -r ./src/dotenv/index.js ./index.js",
+    "start-dev": "export NODE_ENV=development && kill-port 8080 && nodemon --inspect -r ./src/dotenv/index.js ./index.js",
     "update-database": "export NODE_ENV=development && sequelize-cli db:migrate",
     "seed-database": "export NODE_ENV=development && sequelize-cli db:seed:all",
-    "undo-migration": "export NODE_ENV=development && sequelize db:migrate:undo:all"
+    "undo-migration-all": "export NODE_ENV=development && sequelize db:migrate:undo:all",
+    "undo-migrate-recent": "export NODE_ENV=development && sequelize db:migrate:undo"
   },
   "author": "",
   "license": "ISC",
@@ -17,9 +18,18 @@
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "kill-port": "^2.0.1",
+    "module-alias": "^2.2.2",
     "mysql2": "^2.3.3",
     "sequelize": "^6.21.4",
     "uuid": "^9.0.0",
     "yup": "^0.32.11"
+  },
+  "_moduleAliases": {
+    "@root"      : ".",
+    "@helpers"      : "src/helpers/index.js",
+    "@controllers" : "src/controllers/index.js",
+    "@utils"  : "src/utils/index.js",
+    "@validators"  : "src/validators/index.js",
+    "@middlewares"  : "src/middlewares/index.js"
   }
 }

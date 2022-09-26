@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       // through table does not need to create manually 
       // because it will be created by sequelize automatically and
       // will be used for eager loading
-      Roles.belongsToMany(models.Users, { through: 'UserRoles', foreignKey: 'roleId', otherKey: 'userId' });
     }
   }
   Roles.init({
